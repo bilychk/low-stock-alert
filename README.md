@@ -149,20 +149,3 @@ The window is relative to the latest snapshot rather than `CURRENT_DATE`, becaus
 5. Insert the snapshots from `sql/03_test_snapshots.sql` one at a time, waiting for a poll in between, and check the sheet.
 
 ---
-
-## Project summary (STAR)
-
-**Situation.** Low-stock alerts are a core part of inventory analytics, but I had only worked with stock data in reports and spreadsheets. I wanted to understand how an automated alert works end to end: how the data is modelled, where the rule should live and how duplicates and timing are handled.
-
-**Task.** Build a working low-stock alert on a realistic inventory model that logs each breach exactly once, then test it and find its limits instead of stopping at "it runs".
-
-**Action.**
-- Modelled a star schema in PostgreSQL with a daily periodic-snapshot fact table and a Type-2 product dimension.
-- Wrote the alert rule in SQL and verified the expected output before connecting any automation tool.
-- Designed a composite alert ID from snapshot date, product and location as a stable deduplication key, and kept volatile values such as the pickup timestamp out of it.
-- Connected the database to Zapier with a custom-query trigger and logged alerts to Google Sheets, converting timestamps from UTC to local time so the log is sortable.
-- Tested the live workflow with new snapshots, including a restock and a new breach.
-
-**Result.** The workflow ran end to end: a new snapshot in the database became a new row in the alert log without manual steps, and no duplicate alerts were created. Testing also exposed a real limitation: a breach was missed because the query only reads the latest snapshot at polling time. I identified the fix, a look-back window combined with the deduplication key, and verified on the demo data that it catches all three breaches.
-
-**What I took from it.** Where business logic lives matters as much as whether the automation works. Keeping the rule in SQL made it easy to test and fix, and testing the edge cases showed a gap that a single successful run would have hidden.
