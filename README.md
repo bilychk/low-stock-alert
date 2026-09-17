@@ -103,9 +103,9 @@ Test snapshots: [`sql/03_test_snapshots.sql`](sql/03_test_snapshots.sql)
 
 | Snapshot | Breach in data | Logged in sheet |
 |---|---|---|
-| 2026-03-20 | Steel Bolt M8, Riga DC, 80 | ✅ via trigger test |
-| 2026-03-21 | USB-C Cable 1m, Tallinn DC, 60 | ❌ not logged |
-| 2026-03-22 | Wireless Mouse, Tallinn DC, 45 | ✅ picked up automatically by the live Zap |
+| 2026-03-20 | Steel Bolt M8, Riga DC, 80 |  via trigger test |
+| 2026-03-21 | USB-C Cable 1m, Tallinn DC, 60 |  not logged |
+| 2026-03-22 | Wireless Mouse, Tallinn DC, 45 |  picked up automatically by the live Zap |
 
 What the test confirmed:
 
